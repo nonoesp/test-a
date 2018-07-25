@@ -2,14 +2,13 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+# variables
+
 version=$(v)
-project_name=MyProject
+project_name=RefineryClient
+release_notes=`cat release_notes.md`
 
-export_token:
-	@export GITHUB_TOKEN=$(GITHUB_TOKEN)
-
-check_for_version:
-	@[ "${v}" ] || ( echo ">> v is not set, set a version like v=0.3.0"; exit 1 )
+# main
 
 release:
 	@make check_for_version
@@ -18,17 +17,35 @@ release:
 	@make tag
 	@make create_release
 	@make upload
-	@make remove_zip
+	@make delete_zip
+
+unrelease:
+	@make check_for_version
+	@echo "Deleting release $(project_name) v$(version)"
+	@make delete_release
+	@make delete_tag
+
+# util
+
+export_token:
+	@export GITHUB_TOKEN=$(GITHUB_TOKEN)
+
+check_for_version:
+	@[ "${v}" ] || ( echo ">> v is not set, set a version like v=0.3.0"; exit 1 )
+
 
 zip:
 	@zip dist.zip dist/*
 
-remove_zip:
+delete_zip:
 	@rm -rf dist.zip
 
 tag:
 	@git tag $(version)
 	@git push --tags
+
+delete_tag:
+	@git push origin :$(version)
 
 create_release:
 	@gothub release \
@@ -36,7 +53,13 @@ create_release:
 	-r test-a \
 	--tag $(version) \
 	--name "$(project_name) v$(version)" \
-	--description "Description here."
+	--description "$(release_notes)"
+
+delete_release:
+	@gothub delete \
+	-u nonoesp \
+	-r test-a \
+	--tag $(v)
 
 upload:
 	@gothub upload \
