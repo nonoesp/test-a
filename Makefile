@@ -2,6 +2,16 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+# Auto-release script
+# Nono Martínez Alonso (@nonoesp)
+
+# For this to work, you need to set the GITHUB_TOKEN
+# variable inside your .env, make sure to .gitignore
+# .env to avoid exposing your token
+
+# Here is how to generate a token on GitHub
+# https://help.github.com/articles/creating-an-access-token-for-command-line-use
+
 # variables
 
 version=$(v)
