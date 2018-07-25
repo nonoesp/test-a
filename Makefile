@@ -35,10 +35,12 @@ check_for_version:
 
 
 zip:
-	@zip dist.zip dist/*
+	@mv dist $(project_name)
+	@zip $(project_name).zip $(project_name)/*
+	@mv $(project_name) dist
 
 delete_zip:
-	@rm -rf dist.zip
+	@rm -rf $(project_name).zip
 
 tag:
 	@git tag $(version)
@@ -68,4 +70,4 @@ upload:
 	-r test-a \
 	--tag $(version) \
 	--name "$(project_name)-v$(version).zip" \
-	--file dist.zip
+	--file $(project_name).zip
