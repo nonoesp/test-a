@@ -7,6 +7,8 @@ export $(shell sed 's/=.*//' .env)
 version=$(v)
 project_name=TestProject
 release_notes=`cat release_notes.md`
+username=nonoesp
+repository=test-a
 
 # main
 
@@ -51,22 +53,22 @@ delete_tag:
 
 create_release:
 	@gothub release \
-	-u nonoesp \
-	-r test-a \
+	-u $(username) \
+	-r $(repository) \
 	--tag $(version) \
 	--name "$(project_name) v$(version)" \
 	--description "$(release_notes)"
 
 delete_release:
 	@gothub delete \
-	-u nonoesp \
-	-r test-a \
+	-u $(username) \
+	-r $(repository) \
 	--tag $(v)
 
 upload:
 	@gothub upload \
-	-u nonoesp \
-	-r test-a \
+	-u $(username) \
+	-r $(repository) \
 	--tag $(version) \
 	--name "$(project_name)-v$(version).zip" \
 	--file $(project_name).zip
