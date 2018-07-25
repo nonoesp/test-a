@@ -1,2 +1,2 @@
 bundle
-for 0.8
+for 3.0

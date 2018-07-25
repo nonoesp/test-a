@@ -5,7 +5,7 @@ export $(shell sed 's/=.*//' .env)
 # variables
 
 version=$(v)
-project_name=RefineryClient
+project_name=TestProject
 release_notes=`cat release_notes.md`
 
 # main
@@ -46,6 +46,7 @@ tag:
 
 delete_tag:
 	@git push origin :$(version)
+	@git tag --delete $(version)
 
 create_release:
 	@gothub release \
