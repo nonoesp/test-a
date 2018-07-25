@@ -33,7 +33,6 @@ export_token:
 check_for_version:
 	@[ "${v}" ] || ( echo ">> v is not set, set a version like v=0.3.0"; exit 1 )
 
-
 zip:
 	@mv dist $(project_name)
 	@zip $(project_name).zip $(project_name)/*
