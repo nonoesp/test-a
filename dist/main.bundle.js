@@ -1,1 +1,2 @@
-test-a file bundle
+bundle
+for 0.8
